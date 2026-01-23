@@ -5,7 +5,7 @@ Loading Animation - Playbox AI
 - START
 - Game Loads
     - User Taps Screen
-        - Music Begins 🎺
+        - Music Begins 🎺🎺🎺🎺🎺
         - Rewardables Spawn
         - Player Begins moving (jumping disabled)
             - Player collects cash (20$ each)
@@ -72,5 +72,6 @@ Loading Animation - Playbox AI
 Missing Assests
 
  - Finish line rope 
- - 'EVADE' text ? 
- - 
+ - Fonts
+ - Sound ?
+ - Hearts
