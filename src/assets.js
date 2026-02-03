@@ -1,5 +1,9 @@
 export const ASSET_LIST = [
 
+  //test assets
+
+   { alias: "sheetTestJSON", src: "assets/raw/texture.json" },
+
   { alias: "bg", src: "assets/raw/background.png" },
   { alias: "footer", src: "assets/raw/footer.webp" },
   { alias: "paypalBalance", src: "assets/raw/paypal_balance.webp" },
@@ -13,6 +17,7 @@ export const ASSET_LIST = [
 
   { alias: "sheetPlayer", src: "assets/raw/sheet_player.png" },
   { alias: "sheetEnemy", src: "assets/raw/sheet_enemy.png" },
+
 
 
   // rewardables/ obstacles
@@ -46,6 +51,6 @@ export const ASSET_LIST = [
   { alias: "conf10", src: "assets/raw/confetti_10.png" },
 ];
 
-export async function loadAssets() {
-  await PIXI.Assets.load(ASSET_LIST);
+export async function loadAssets() { //export as async function so can await it in game.js
+  await PIXI.Assets.load(ASSET_LIST); //telling pixi to load everything before continuting 
 }

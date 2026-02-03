@@ -1,29 +1,37 @@
 import { loadAssets } from "./assets.js";
 
-export async function startGame(app) {
+export async function startGame(app) { //exporting my startgame function to main.js
     await loadAssets();
 
     const bg = PIXI.Sprite.from("bg");
     bg.anchor.set(0.5);
     app.stage.addChild(bg);
 
-    const player = PIXI.Sprite.from("sheetPlayer");
+    const sheet = PIXI.Assets.get("sheetTestJSON"); // retrieve the spritesheet that was loaded from my texture.json
+
+    console.log("Player atlas frame keys:", Object.keys(sheet.textures));
+
+    const standTex = sheet.textures["player_idle.png"]; // get each frame texture from the atlas.
+    const blinkTex = sheet.textures["player_blinking.png"];
+
+    const player = PIXI.Sprite.from("standTex");
     player.anchor.set(0.5, 1); // center horizontally, bottom vertically
     app.stage.addChild(player);
 
-    //since I dont have an atlas
-    // show one frame from the spritesheet - dont fully understand yet -
-    const baseTexture = PIXI.Texture.from("sheetPlayer").baseTexture;
+    function blinkLoop() { 
+        const delayMs = 2000 + Math.random() * 2000; //random delay between 2000ms and 4000ms
 
-    // example rectangle (ajusting these properties changes the frame shown)
-    const frameRect = new PIXI.Rectangle(300, 0, 150, 251);
+        setTimeout(() => { // wait for the random delay before blinking.
+            player.texture = blinkTex; // swap the texture to the blink frame.
 
-    // create a texture that represents only that part of the image
-    const frameTexture = new PIXI.Texture(baseTexture, frameRect);
+            setTimeout(() => { // wait a short moment to hold the blink.
+                player.texture = standTex; // swap back to eyes open.
+                blinkLoop(); // call again for eternal blinking
+            }, 120); // hold blink timer.
+        }, delayMs); 
+    } 
 
-    // replace player sprite with frame-only sprite
-    player.texture = frameTexture;
-
+    blinkLoop();
 
 
     function fitCover(sprite, w, h) {
@@ -38,19 +46,19 @@ export async function startGame(app) {
     }
 
     function layout() {
-        const w = app.renderer.width;
+        const w = app.renderer.width; //read the width + height of the pixi canvas
         const h = app.renderer.height;
 
         // background
-        bg.x = w / 2;
+        bg.x = w / 2; //position bg at horizontal and vertical center
         bg.y = h / 2;
-        fitCover(bg, w, h);
+        fitCover(bg, w, h); //scale bg so it covers the screen
 
         // player
         player.x = w * 0.25 //player 25% from left
-        player.y = h * 0.90
+        player.y = h * 0.75 //player 80% from the top 
 
-        player.scale.set(0.4)
+        player.scale.set(0.55)
     }
 
     // call layout function once
